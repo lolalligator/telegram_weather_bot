@@ -1,7 +1,8 @@
 from aiogram import Bot, Dispatcher, types, F
-from api_key import TELEGRAM_API_TOKEN, WEATHER_API_KEY
 import asyncio
 import logging
+import weather_api
+from api_key import TELEGRAM_API_TOKEN
 
 # Включаем логирование для отладки
 logging.basicConfig(level=logging.INFO)
@@ -10,6 +11,7 @@ logging.basicConfig(level=logging.INFO)
 bot = Bot(token=TELEGRAM_API_TOKEN)
 dp = Dispatcher()
 
+
 @dp.message(F.text == '/start')
 async def send_welcome(message: types.Message):
     await message.answer("""Добро пожаловать в бота прогноза погоды. 🥳
@@ -17,6 +19,7 @@ async def send_welcome(message: types.Message):
 📋 Ознакомиться с полным списком команд и инструкцией по использованию можно с помощью команды /help
 
 ⛅️ Получить прогноз погоды можно с помощью команды /weather""")
+
 
 @dp.message(F.text == '/help')
 async def send_welcome(message: types.Message):
@@ -33,9 +36,11 @@ async def send_welcome(message: types.Message):
 3) Затем бот запросит временной промежуток прогноза погоды (от 1 до 5 дней)
 4) После чего пользователь получает сообщения с прогнозами погоды на каждый день маршрута""")
 
+
 async def main():
     # Подключаем бота и диспетчера
     await dp.start_polling(bot)
+
 
 # Запуск бота
 if __name__ == "__main__":
